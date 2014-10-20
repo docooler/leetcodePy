@@ -22,7 +22,7 @@ class Solution_test:
         		return key
 
 class SolutionUnitTest(unittest.TestCase):
-	"""docstring for ClassName"""
+	"""docstring for SolutionUnitTest"""
 	def setup(self):
 		pass
 	def tearDown(self):
