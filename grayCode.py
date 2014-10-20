@@ -5,50 +5,43 @@ class Solution:
     # @return an integer
 	def grayCode(self, n):
 		self.used = []
-		self.num  = n
+		self.len  = n
 		self.data = []
-		self.dataLen(n)
 
-		print "data len " + str(self.len)
+		# print "data len " + str(self.len)
 		current = 0
 		self.data.append(current)
 		self.used.append(current)
-		print "data length is " + str(len(self.data))
-		while len(self.data) <= n+1:		
+		# print "data length is " + str(len(self.data))
+		# print "all data num is " + str(1<<self.len)
+		while len(self.data) < (1<<self.len):		
 			current = self.getNext(current)
+			# if current == None:
+			# 	break
 			self.used.append(current)
 			self.data.append(current)
-		print self.data
+		# print self.data
 		return self.data
-	def dataLen(self, n):
-		self.len = 1
-		while 1:
-			if n == 0:
-				return
-			else:
-				n = n>>1
-				self.len = self.len +  1
 	def getNext(self, current):
-		print "enter getNext"
-		for x in xrange(0,self.len-1):
+		# print "enter getNext"
+		for x in xrange(0,self.len):
 			data = self.changeOneBit(current, x, 1)
+			# print "changeOneBit 1 return :" + str(data)
 			if data not in self.used:
-				if data <= self.num:
-					print "getNext return" + str(data)
-					return data
+				return data
 
 			data = self.changeOneBit(current, x, 0)
+			# print "changeOneBit 1 return :" + str(data)
 			if data not in self.used:
-				if data <= self.num:										
-					print "getNext return" + str(data)
-					return data
+				return data
 
-	def changeOneBit(self, current, offset, zero):
-		if zero:
+	def changeOneBit(self, current, offset, setbit):
+		if setbit:
 			mask = 1<<offset
+			return current | mask
 		else:
 			mask = ~(1<<offset)
-		return  current & mask
+			return  current & mask
 
 class SolutionUnitTest(unittest.TestCase):
 	"""docstring for SolutionUnitTest"""
@@ -57,9 +50,12 @@ class SolutionUnitTest(unittest.TestCase):
 	def tearDown(self):
 		pass
 	def testsingleNumber(self):
-		data = [0,1,3,2]
+		# data = [0,1,3,2]
 		s = Solution()
-		r_data = s.grayCode(2)
+		for x in xrange(0,7):
+			print str(x) + "is :"
+			print s.grayCode(x)
+		# print str(len(r_data))
         # print r_data
 		# self.assertEqual(r_data ,data, "test failed")
 
