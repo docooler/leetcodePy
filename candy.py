@@ -61,8 +61,6 @@ class Solution:
 					index = x
 
 		return index
-
-
 class SolutionUnitTest(unittest.TestCase):
 	"""docstring for SolutionUnitTest"""
 	def setup(self):
