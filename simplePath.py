@@ -20,16 +20,9 @@ class Solution:
 			# print l
 			if l != decollator:
 				subPath += l
-				# print "subPath :" + subPath
+				index += 1
 			else:
-				if index+1<length and path[index+1] == decollator:
-					subPath += '/'
-
-					while index<length and  path[index] == decollator :
-						index += 1
-					continue
-
-				if subPath in ['..','.','../', './']:
+				if subPath in ['..','.','../', './', ""]:
 					if subPath in ['..', '../']:
 						try:
 							pathStack.pop()
@@ -44,7 +37,9 @@ class Solution:
 					print "push subPath " + subPath
 				subPath = ""
 
-			index += 1
+				while index<length and  path[index] == decollator :
+					index += 1
+
 		self.pathStack = pathStack
 
 		if len(subPath)>0:
@@ -100,8 +95,7 @@ class SolutionUnitTest(unittest.TestCase):
 		# data = [0,1,3,2]
 		print "TestCase1"
 		s = Solution()
-		s.simplifyPath("/path/haha/")
-		self.assertEqual(result,'/path/haha')
+		self.assertEqual(s.simplifyPath("/path/haha/"),"/path/haha")
 		self.assertEqual(s.simplifyPath("/path//haha/"), '/path/haha')
 		self.assertEqual(s.simplifyPath("/path////haha/"), '/path/haha')
 		self.assertEqual(s.simplifyPath("/path////haha/../../../"), '/')
