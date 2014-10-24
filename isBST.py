@@ -8,7 +8,9 @@ class Solution:
             return True
         lDeep = self.getNodeDepth(root.right)
         rDeep = self.getNodeDepth(root.left)
-        if abs(lDeep - rDeep) < 2 and self.isBalanced(root.right) and self.isBalanced(root.left)
+        return (abs(lDeep - rDeep) < 2 and self.isBalanced(root.right) and self.isBalanced(root.left))
+
+
         
     def getNodeDepth(self, node):
         if(node==None):return 0;
