@@ -4,51 +4,26 @@ class Solution:
     # @param root, a tree node
     # @return a list of lists of integers
     def isBalanced(self, root):
-        self.minDeep = None
-
         if root == None:
             return True
-        left = True
-        right = True
-        leftDeep = 0
-        rightDeep = 0
-
-        if root.left != None:
-           left  =  self.treeDeepVisit(root.left, 0)
-           leftDeep = self.minDeep
-        if root.right != None:
-           right = self.treeDeepVisit(root.right,0)
-           rightDeep = self.minDeep
-           
-        if rightDeep - leftDeep not in [-1, 0, 1]:
-            return False
+        lDeep = self.getNodeDepth(root.right)
+        rDeep = self.getNodeDepth(root.left)
+        if abs(lDeep - rDeep) < 2 and self.isBalanced(root.right) and self.isBalanced(root.left)
         
+    def getNodeDepth(self, node):
+        if(node==None):return 0;
 
-        if self.minDeep == None:
-            return True
-        if left and right:
-            return True
-        return False
+        stack=[(node,1)];
+        dep=1;
 
-    def treeDeepVisit(self, root, parentDeep):
-        selfDeep = parentDeep + 1
-        if root.left == None and root.right == None:
-            if self.minDeep != None:
-                distance = self.minDeep - selfDeep
-                if distance > 1 or distance < -1:
-                    return False
-            else:
-                self.minDeep = selfDeep
-            return True
-        left = True
-        right = True
-        if root.left != None:
-           left =  self.treeDeepVisit(root.left, selfDeep)
-        if root.right != None:
-           right = self.treeDeepVisit(root.right, selfDeep)
-        if left and right:
-            return True
-        return False
+        while(len(stack)):
+            first,dep=stack.pop(0)
+            if(first.left!=None):
+                stack.append((first.left,dep+1))
+            if(first.right!=None):
+                stack.append((first.right,dep+1))
+        return dep
+
 class TreeNode(object):
     """docstring for TreeNode"""
     def __init__(self, arg):
