@@ -7,35 +7,27 @@
 import unittest
 
 class Solution:
-    # @param root, a tree node
-    # @param sum, an integer
-    # @return a boolean
     def pathSum(self, root, sum):
-        pathMap = {}
+        paths = []
         if root == None:
             return []
-        stack = [(root,[root.val])]
+        stack = [(root,[root.val], sum)]
         while len(stack):
-            node,path = stack.pop()
+            node, path, lSum = stack.pop()
             path.append(node.val)
 
             if node.left == None and node.right == None:
-                lSum = 0
-                for x in path:
-                    lSum += x
-                if pathMap.has_key(lSum):
-                    pathMap[lSum].append(path)
-                else:
-                    pathMap[lSum] = [path]
+                if lSum == node.val:
+                    paths.append(path)
                 continue
                     
             if node.left != None:
-                stack.append((node.left, path))
+                stack.append((node.left, path, lSum-node.val))
             if node.right != None:
-                stack.append((node.right, path))
-        if pathMap.has_key(sum):
-            return pathMap[sum]
-        return []
+                stack.append((node.right, path, lSum-node.val))
+        # print "len of path :" + str(len(path)) 
+        return paths
+        
 class TreeNode(object):
     """docstring for TreeNode"""
     def __init__(self, arg):
@@ -47,7 +39,7 @@ def MutileTree():
     tree = TreeNode(0)
     head = tree
     sum = 0
-    for x in xrange(1,1000):
+    for x in xrange(1,800):
         tree.right = TreeNode(x)
         tree = tree.right
         sum += x
