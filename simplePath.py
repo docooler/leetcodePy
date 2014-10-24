@@ -10,79 +10,24 @@ class Solution:
 	# @param A, a list of integer
     # @return an integer
 	def simplifyPath(self, path):
-		pathStack = []
-		decollator = '/'
-		index = 1
-		subPath = '/'
-		length = len(path)
-		while index < length:
-			l = path[index]
-			# print l
-			if l != decollator:
-				subPath += l
-				index += 1
-			else:
-				if subPath in ['..','.','../', './', ""]:
-					if subPath in ['..', '../']:
-						try:
-							pathStack.pop()
-						except Exception, e:
-							pathStack = []
-						print "back to /"
-					subPath = ""
-					index += 1
-					continue
-				else:
-					pathStack.append(subPath)
-					print "push subPath " + subPath
-				subPath = ""
+		absPath = []
+		subPaths = path.split('/')
+		length = len(subPaths)
 
-				while index<length and  path[index] == decollator :
-					index += 1
-
-		self.pathStack = pathStack
-
-		if len(subPath)>0:
-			# print "tail subPath : "+ subPath
-			if subPath in ['..','../']:
+		for sPath in subPaths:
+			if sPath == '..':
 				try:
-					self.pathStack.pop()
+					absPath.pop()
 				except Exception, e:
-					return '/'
-			if subPath not in ['..','.','../', './']:
-				try:
-					lastPath = self.pathStack.pop()
-				except Exception, e:
-					return self.getPath(subPath)
+					absPath = []
 			
-				lastPath = lastPath + '/' + subPath
-				self.pathStack.append(lastPath)
-		
-
-		retPath = ""
-		while len(self.pathStack)>0:
-			result = self.pathStack.pop()
-			# print result
-			sPath = self.getPath(result)
-			if sPath == '/':
-				continue
-			retPath = sPath + retPath
-		if retPath == "":
+			if sPath not in ['.', '..', '']:
+				absPath.append(sPath)
+		if len(absPath) == 0:
 			return '/'
-		return retPath
-
-	def getPath(self, result):	
-		if result in ["/..", '/.','//'] :
-			return '/'
-		if result in ['..','../']:
-			try:
-				self.pathStack.pop()
-			except Exception, e:
-				return '/'
-
-		if result[0] != '/':
-		    result = '/'+ result
-
+		result = ""
+		for p in absPath:
+			result = result + '/' + p
 		return result
 
 class SolutionUnitTest(unittest.TestCase):
