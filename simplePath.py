@@ -16,10 +16,8 @@ class Solution:
 
 		for sPath in subPaths:
 			if sPath == '..':
-				try:
+				if not absPath == []:
 					absPath.pop()
-				except Exception, e:
-					absPath = []
 			
 			if sPath not in ['.', '..', '']:
 				absPath.append(sPath)

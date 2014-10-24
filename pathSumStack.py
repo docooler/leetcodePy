@@ -12,7 +12,7 @@ class Solution:
         if root == None:
             return []
         stack = [(root,[root.val], sum)]
-        while len(stack):
+        while not stack == []:
             node, path, lSum = stack.pop()
             path.append(node.val)
 
@@ -25,9 +25,9 @@ class Solution:
                 stack.append((node.left, path, lSum-node.val))
             if node.right != None:
                 stack.append((node.right, path, lSum-node.val))
-        # print "len of path :" + str(len(path)) 
+        # print "len of path :" + str(len(paths)) 
         return paths
-        
+
 class TreeNode(object):
     """docstring for TreeNode"""
     def __init__(self, arg):
@@ -39,12 +39,21 @@ def MutileTree():
     tree = TreeNode(0)
     head = tree
     sum = 0
-    for x in xrange(1,800):
+    for x in xrange(1,1000):
         tree.right = TreeNode(x)
         tree = tree.right
         sum += x
+    
+    i = 999
+    tree = head
+    while i > 0:
+        tree.left = TreeNode(i)
+        tree = tree.left
+        i -= 1
+
+
     s = Solution()
-    print s.pathSum(head, sum)  
+    s.pathSum(head, sum)  
         
 class SolutionUnitTest(unittest.TestCase):
     """docstring for SolutionUnitTest"""
