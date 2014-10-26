@@ -41,12 +41,12 @@ class Solution:
         nPrev = None
         while temp != None:
             node = RandomListNode(temp.label)
-            if nodeMap.has_key(temp) == False:
+            if temp not in nodeMap:
                 nodeMap[temp] = node
             else:
                 break
             if temp.random != None:
-                if nodeMap.has_key(temp.random) == False:
+                if temp.random not in nodeMap:
                     randomList.append((node,temp))
                 else:
                     node.random = nodeMap[temp.random]
@@ -60,12 +60,12 @@ class Solution:
             temp = temp.next
         while randomList != []:
             node, srcNode = randomList.pop()
-            if nodeMap.has_key(srcNode.random) == False:
+            if srcNode.random not in nodeMap:
                 node.random = self.copyRandomList(srcNode.random)
             else:
                 node.random = nodeMap[srcNode.random]
         return nHead
-        
+
 if __name__ == '__main__':
     unittest.main()
 
