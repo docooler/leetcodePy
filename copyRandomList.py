@@ -43,6 +43,8 @@ class Solution:
             node = RandomListNode(temp.label)
             if nodeMap.has_key(temp) == False:
                 nodeMap[temp] = node
+            else:
+                break
             if temp.random != None:
                 if nodeMap.has_key(temp.random) == False:
                     randomList.append((node,temp))
@@ -58,8 +60,12 @@ class Solution:
             temp = temp.next
         while randomList != []:
             node, srcNode = randomList.pop()
-            node.random = self.copyRandomList(srcNode.random)
+            if nodeMap.has_key(srcNode.random) == False:
+                node.random = self.copyRandomList(srcNode.random)
+            else:
+                node.random = nodeMap[srcNode.random]
         return nHead
+        
 if __name__ == '__main__':
     unittest.main()
 
