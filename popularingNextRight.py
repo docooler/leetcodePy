@@ -56,6 +56,27 @@ class Solution:
     	if rightDeep > leftDeep:
     		return rightDeep
     	return leftDeep
+    def connect_queue(self, root):
+        quene = []
+        if root == None:
+            return 
+        quene.append((0,root))
+        fatherDeep = -1
+        leftNode = None
+        while quene != [] :
+            currentDeep, node = quene.pop(0)
+            if node.left != None:
+                quene.append((currentDeep+1, node.left))
+            if node.right != None:
+                quene.append((currentDeep+1, node.right))
+            if currentDeep != fatherDeep:
+                fatherDeep = currentDeep
+            else:
+                leftNode.next = node
+            leftNode = node
+
+
+
 
 class Solution_Test(unittest.TestCase):
     """docstring for Solution"""
@@ -76,6 +97,14 @@ class Solution_Test(unittest.TestCase):
         t.right = TreeNode(3)
         s = Solution()
         s.connect(t)
+        t.printVal()
+    def testCase3(self):
+        print "start testCase3"
+        t = TreeNode(1)
+        t.left = TreeNode(2)
+        t.right = TreeNode(3)
+        s = Solution()
+        s.connect_queue(t)
         t.printVal()
 if __name__ == '__main__':
     unittest.main()
