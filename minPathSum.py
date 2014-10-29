@@ -5,9 +5,7 @@ class Solution:
     def minPathSum(self, grid):
         sumMap = {}
         def pathSum(rows,cols):
-            if (rows,cols) in sumMap:
-                return sumMap[(rows, cols)]
-            else:
+            if not (rows,cols) in sumMap:
                 sum = 0
                 flag = 0
                 if rows == 1:
@@ -20,7 +18,7 @@ class Solution:
                 else:
                     sum = min(pathSum(rows-1, cols)+grid[rows-1][cols-1], pathSum(rows, cols-1) + grid[rows-1][cols-1])
                 sumMap[(rows,cols)] = sum
-                return sum 
+            return sumMap[(rows, cols)]
         return pathSum(len(grid), len(grid[0]))
 
 class SolutionTest(unittest.TestCase):
