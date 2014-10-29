@@ -2,9 +2,6 @@
 import unittest
 
 class Solution:
-    # @param root, a tree node
-    # @param sum, an integer
-    # @return a boolean
     def minPathSum(self, grid):
         sumMap = {}
         def pathSum(rows,cols):
@@ -18,16 +15,10 @@ class Solution:
                         sum += grid[rows-1][x]
                         flag = 1
                 elif cols == 1 and flag != 1:
-                    # print "start cols=1 sum = " + str(sum)
                     for x in xrange(rows):
-                        # print "grid[" + str(x) + "][1] = " + str(grid[x][cols])
                         sum += grid[x][cols-1]
-                    # print "start cols=1 sum = " + str(sum)
                 else:
-                    # print "rows : " + str(rows) + " cols :" + str(cols)
                     sum = min(pathSum(rows-1, cols)+grid[rows-1][cols-1], pathSum(rows, cols-1) + grid[rows-1][cols-1])
-
-                # print "sumMap[(" + str(rows) + ", " + str(cols) + ")] = "  + str(sum)
                 sumMap[(rows,cols)] = sum
                 return sum 
         return pathSum(len(grid), len(grid[0]))
