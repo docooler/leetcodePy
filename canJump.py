@@ -1,4 +1,4 @@
-Line 18: RuntimeError: maximum recursion depth exceeded in cmp
+#Line 18: RuntimeError: maximum recursion depth exceeded in cmp
 class Solution(object):
     def canJump(self, nums):
         """
@@ -22,5 +22,25 @@ class Solution(object):
                     flag = True
             self.travel[start] = flag
         return self.travel[start]
+
+#Time Limit Exceeded 
+ class Solution(object):
+    def canJump(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
+        if nums == []:
+            return True
+        self.travel = [False] * len(nums)
+        self.travel[0] = True
+        length = len(nums)
+        for x in xrange(length):
+            if self.travel[x] == True:
+                for i in xrange(nums[x]):
+                    if x+i+1 < length:
+                        self.travel[x+i+1] = True
+        return self.travel[-1]
+                
         
-        
+               
